@@ -15,7 +15,7 @@
 				<label for="idNumClient" class="control-label col-sm-4">numero
 					Login :</label>
 				<div class="col-sm-8">
-					<h:inputText id="idNumClient" class="form-control"
+					<h:inputText id="idNumClient" class="form-control" required="true"
 						label="numClient" value="#{clientBean.numClient}" />
 					<h:message for="idNumClient" class="erreur" />
 				</div>
@@ -25,7 +25,8 @@
 				<label for="idPassword" class="control-label col-sm-4">Password
 					:</label>
 				<div class="col-sm-8">
-					<h:inputText id="idPassword" class="form-control"
+					<h:inputText id="idPassword" type="password" label="password"
+						class="form-control" required="true"
 						value="#{clientBean.password}" />
 					<h:message for="idPassword" class="erreur" />
 				</div>
@@ -36,7 +37,7 @@
 				</div>
 			</div>
 		</h:form>
-		<h:outputText class="erreur" value="#{clientBean.message }"></h:outputText>
+		<!-- <h:outputText class="erreur" value="#{clientBean.message }"></h:outputText> -->
 	</ui:define>
 </ui:composition>
 </html>
