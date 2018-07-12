@@ -21,7 +21,8 @@
 			<br />
 			<hr />
 			<!-- on force la page comptes.jsf pour tous les Clients sans vérifier l'ID et Pwd du client  -->
-			<a href="comptes.jsf">liste de comptes</a>
+			<h:outputLink
+				value="comptes.jsf?numClient=#{clientBean.client.numClient}">Liste des comptes du client</h:outputLink>
 		</h:form>
 	</ui:define>
 

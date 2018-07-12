@@ -11,6 +11,13 @@
 	   LISTE COMPTES
 	</ui:define>
 	<ui:define name="content">
+		<f:metadata>
+		<!-- pour recopier dans #{comteBean.numClient} la valeur du paramètre numClient
+		passé en fin d'URL en mode get : href="comptes.jsf?numClient = 2 ..."-->
+			<f:viewParam name="numClient" value="#{compteBean.numClient}" />
+			<f:event listener="#{compteBean.initComptes}" type="preRenderView" />
+		</f:metadata>
+
 		<h3>
 			Liste des Comptes du client n°
 			<h:outputText value="#{compteBean.numClient}"></h:outputText>
