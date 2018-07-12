@@ -11,26 +11,37 @@
 	   VIREMENT
 	</ui:define>
 	<ui:define name="content">
-		<h:form>
-			<h:messages class="erreur"></h:messages>
-			numéro compte débiteur: 
-			<h:selectOneListbox size="1" value="#{compteBean.numCptDebiteur}">
-				<f:selectItems var="cpt" value="#{compteBean.comptes}"
-					itemValue="#{cpt.numCompte}" itemLabel="#{cpt.label}-#{cpt.solde}"></f:selectItems>
-			</h:selectOneListbox>
-			<br />
-			numéro compte créditeur: 
-			<h:selectOneListbox size="1" value="#{compteBean.numCptCrediteur}">
-				<f:selectItems var="cpt" value="#{compteBean.comptes}"
-					itemValue="#{cpt.numCompte}" itemLabel="#{cpt.label}-#{cpt.solde}"></f:selectItems>
-			</h:selectOneListbox>
-			<br />
-			montant: <h:inputText value="#{compteBean.montant}"></h:inputText>
-			<br />
-			<h:commandButton value="effectuer virement"
-				action="#{compteBean.effectuerVirement}"></h:commandButton>
+		<!-- Alignement via JSF (h:panleGrid) pas très responsive, moins bien que bootstrap-css -->
+		<h:form id="f">
+			<h:panelGrid columns="3">
+
+				<h:outputLabel for="idNumCptDeb">N° compte débiteur :</h:outputLabel>
+				<h:selectOneListbox id="idNumCptDeb" size="1"
+					value="#{compteBean.numCptDebiteur}">
+					<f:selectItems var="cpt" value="#{compteBean.comptes}"
+						itemValue="#{cpt.numCompte}" itemLabel="#{cpt.label}-#{cpt.solde}"></f:selectItems>
+				</h:selectOneListbox>
+				<h:message for="idNumCptDeb" class="erreur" />
+
+				<h:outputLabel for="idNumCptCred">numéro compte créditeur : </h:outputLabel>
+				<h:selectOneListbox id="idNumCptCred" size="1"
+					value="#{compteBean.numCptCrediteur}">
+					<f:selectItems var="cpt" value="#{compteBean.comptes}"
+						itemValue="#{cpt.numCompte}" itemLabel="#{cpt.label}-#{cpt.solde}"></f:selectItems>
+				</h:selectOneListbox>
+				<h:message for="idNumCptCred" class="erreur" />
+
+				<h:outputLabel for="idMontant">Montant :</h:outputLabel>
+				<h:inputText label="Montant" required="true" id="idMontant"
+					value="#{compteBean.montant}"></h:inputText>
+				<h:message for="idMontant" class="erreur" />
+
+				<h:outputLabel for="idBtnVirement" />
+				<h:commandButton id="idBtnVirement" value="Effectuer virement"
+					action="#{compteBean.effectuerVirement}" />
+				<h:message for="idBtnVirement" class="erreur" />
+			</h:panelGrid>
 		</h:form>
 	</ui:define>
-
 </ui:composition>
 </html>

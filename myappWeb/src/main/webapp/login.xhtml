@@ -7,19 +7,39 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <ui:composition template="/templates/common.xhtml">
-	<ui:define name="title">
-	   LOGIN
-	</ui:define>
+	<ui:define name="title">login</ui:define>
 	<ui:define name="content">
-		<h:form>
-			<h:messages class="erreur"></h:messages>
-			numéro client: <h:inputText value="#{clientBean.numClient}"></h:inputText>
-			<br />
-			mot de passe: <h:inputText value="#{clientBean.password}"></h:inputText>
-			<br />
-			<h:commandButton value="login" action="#{clientBean.verifLogin}"></h:commandButton>
-		</h:form>
-	</ui:define>
 
+		<!-- <h:messages class="erreur" />
+		 h:messages affiche des messages d'erreur 
+	                                      en cas de mauvaises saisies -->
+
+		<h:form class="form-horizontal">
+			<div class="form-group row">
+				<label for="idNumClient" class="control-label col-sm-4">numero
+					client:</label>
+				<div class="col-sm-8">
+					<h:inputText id="idNumClient" class="form-control"
+						label="numClient" value="#{clientBean.numClient}" />
+					<h:message for="idNumClient" class="erreur" />
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label for="idPassword" class="control-label col-sm-4">password:</label>
+				<div class="col-sm-8">
+					<h:inputText id="idPassword" class="form-control"
+						value="#{clientBean.password}" />
+					<h:message for="idPassword" class="erreur" />
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="offset-sm-4 col-sm-8">
+					<h:commandButton value="login" action="#{clientBean.verifLogin}" />
+				</div>
+			</div>
+		</h:form>
+		<h:outputText class="erreur" value="#{clientBean.message }"></h:outputText>
+	</ui:define>
 </ui:composition>
 </html>
