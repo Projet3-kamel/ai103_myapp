@@ -11,11 +11,12 @@
 	    CALCUL
 	</ui:define>
 	<ui:define name="content">
-	   <h:form>
-	   		<h:messages class="erreur"></h:messages>
-			saisie: <h:inputText value="#{calculBean.saisie}"></h:inputText> <br/>
-			<h:commandButton 	value="calculer racine carrée"
-								action="#{calculBean.calculerRacine}"></h:commandButton>
+		<h:form>
+			<h:messages class="erreur"></h:messages>
+			saisie: <h:inputText value="#{calculBean.saisie}"></h:inputText>
+			<br />
+			<h:commandButton value="calculer racine carrée"
+				action="#{calculBean.calculerRacine}"></h:commandButton>
 		</h:form>
 		resultat: <h:outputText value="#{calculBean.resultat}"></h:outputText>
 	</ui:define>

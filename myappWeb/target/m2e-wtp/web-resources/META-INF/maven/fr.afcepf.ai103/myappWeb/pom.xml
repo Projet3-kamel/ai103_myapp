@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
@@ -56,7 +57,13 @@
 			<version>${org.apache.myfaces.version}</version>
 			<scope>runtime</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>fr.afcepf.ai103</groupId>
+			<artifactId>myappCore</artifactId>
+			<!-- maven placera dans la partie WEB-INF/lib du .war construit le fichier 
+				myappCore...jar (projet myappCore packagé ) -->
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 
 	</dependencies>
 

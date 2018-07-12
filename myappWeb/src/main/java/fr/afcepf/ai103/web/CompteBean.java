@@ -1,12 +1,15 @@
 package fr.afcepf.ai103.web;
 
 import fr.afcepf.ai103.data.Compte;
+import fr.afcepf.ai103.data.Operation;
 import fr.afcepf.ai103.service.ServiceCompte;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.ActionEvent;
 import javax.faces.event.ComponentSystemEvent;
 
 @ManagedBean
@@ -14,17 +17,38 @@ import javax.faces.event.ComponentSystemEvent;
 
 public class CompteBean {
 
-	private Long numClient = null;
 	private ServiceCompte servciceCompte = new ServiceCompte();
-	private List<Compte> comptes;
+
+	private Long numClient = null;
+	private Long numCptDebiteur = null;
+	private Long numCptCrediteur = null;
+	private Double montant = null;
+
+	private List<Compte> comptes = null;
+	private List<Operation> operations = null;
+
+	private Long selectedNumCompte = null;
 
 	public CompteBean() {
+		operations = new ArrayList<Operation>();
+	}
+
+	public Long getSelectedNumCompte() {
+		return selectedNumCompte;
+	}
+
+	public void setSelectedNumCompte(Long selectedNumCompte) {
+		this.selectedNumCompte = selectedNumCompte;
 	}
 
 	// Méthode appelée après que le numClient soit automatiquement mis à jour par
 	// JSF
 	public void initComptes(ComponentSystemEvent event) {
 		comptes = servciceCompte.comptesDuClient(numClient);
+	}
+
+	public void onSelectCompte(ActionEvent event) {
+		operations = servciceCompte.oprationDuCompte(numClient);
 	}
 
 	public Long getNumClient() {
@@ -51,10 +75,6 @@ public class CompteBean {
 		this.comptes = comptes;
 	}
 
-	private Long numCptDebiteur = null;
-	private Long numCptCrediteur = null;
-	private Double montant = null;
-
 	public Long getNumCptDebiteur() {
 		return numCptDebiteur;
 	}
@@ -77,6 +97,14 @@ public class CompteBean {
 
 	public void setMontant(Double montant) {
 		this.montant = montant;
+	}
+
+	public List<Operation> getOperations() {
+		return operations;
+	}
+
+	public void setOperations(List<Operation> operations) {
+		this.operations = operations;
 	}
 
 	public String effectuerVirement() {

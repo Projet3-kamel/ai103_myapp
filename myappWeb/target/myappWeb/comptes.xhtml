@@ -7,21 +7,82 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <ui:composition template="/templates/common.xhtml">
-	<ui:define name="title">
-	   LISTE COMPTES
-	</ui:define>
+	<ui:define name="title">comptes</ui:define>
 	<ui:define name="content">
-	   		<h3> Liste des Comptes du client n° <h:outputText value="#{compteBean.numClient}"></h:outputText> </h3>
-	   		<h:dataTable value="#{compteBean.comptes}" var="cpt"  border="1"> 
-	   			<h:column> <f:facet name="header"><f:verbatim>NUMERO</f:verbatim></f:facet> <h:outputText value="#{cpt.numCompte}"/> </h:column> 
-	   			<h:column> <f:facet name="header"><f:verbatim>LIBELLE</f:verbatim></f:facet> <h:outputText value="#{cpt.label}"/> </h:column>  
-	   			<h:column> <f:facet name="header"><f:verbatim>SOLDE</f:verbatim></f:facet> <h:outputText value="#{cpt.solde}"/> </h:column> 
-	   		</h:dataTable>
 
-	  		<hr/>
-			<a href="virement.jsf">nouveau virement</a>
-	
+		<f:metadata>
+			<!-- pour recopier dans  #{compteBean.numClient} la valeur du paramètre numClient
+	           passé en fin d'URL en mode get : href="comptes.jsf?numClient=2" -->
+			<f:viewParam name="numClient" value="#{compteBean.numClient}" />
+			<!-- demander à appeler la méthode d'initialisation initComptes()
+	          après la mise à jour de  #{compteBean.numClient}
+	          et avant l'affichage de la page -->
+			<f:event type="preRenderView" listener="#{compteBean.initComptes}" />
+		</f:metadata>
+
+		<h3>
+			liste des comptes du client
+			<h:outputText value="#{compteBean.numClient}" />
+		</h3>
+	  
+	  ***<br />***<br />***<br />***<br />***<br />***<br />***<br />***<br />***<br />
+	  ***<br />***<br />***<br />***<br />***<br />***<br />***<br />***<br />***<br />
+
+		<h:form>
+			<h:dataTable var="cpt" value="#{compteBean.comptes}" border="1">
+				<h:column>
+					<f:facet name="header">
+						<f:verbatim>numero</f:verbatim>
+					</f:facet>
+					<h:commandLink actionListener="#{compteBean.onSelectCompte}"
+						immediate="false">
+						<f:ajax event="click" render="idTabOp" />
+						<f:setPropertyActionListener value="#{cpt.numCompte}"
+							target="#{compteBean.selectedNumCompte}" />
+						<h:outputText value="#{cpt.numCompte}" />
+					</h:commandLink>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<f:verbatim>label</f:verbatim>
+					</f:facet>
+					<h:outputText value="#{cpt.label}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<f:verbatim>solde</f:verbatim>
+					</f:facet>
+					<h:outputText value="#{cpt.solde}" />
+				</h:column>
+			</h:dataTable>
+		</h:form>
+
+		<hr />
+		<h4>dernières opérations du compte sélectionné:</h4>
+		<h:dataTable id="idTabOp" var="op" value="#{compteBean.operations}"
+			border="1">
+			<h:column>
+				<f:facet name="header">
+					<f:verbatim>date</f:verbatim>
+				</f:facet>
+				<h:outputText value="#{op.date}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<f:verbatim>montant</f:verbatim>
+				</f:facet>
+				<h:outputText value="#{op.montan}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<f:verbatim>label</f:verbatim>
+				</f:facet>
+				<h:outputText value="#{op.label}" />
+			</h:column>
+		</h:dataTable>
+
+		<hr />
+		<a href="virement.jsf">nouveau virement</a>
 	</ui:define>
-
 </ui:composition>
 </html>
