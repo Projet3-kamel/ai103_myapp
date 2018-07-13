@@ -7,11 +7,17 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <ui:composition template="/templates/common.xhtml">
-	<ui:define name="title">
-	  	WELCOME
-	</ui:define>
-	<ui:define name="content">
+	<ui:define name="title">welcome</ui:define>
 
+	<ui:define name="content">
+		<h1>WELCOME !!!</h1>
+		<!--  NB: url en .jsf plutôt que .jsp pour que la requête HTTP
+           soit d'abord analysée par FacesServlet 
+           avant d'aller vers la page .jsp ou .xhtml-->
+		<a href="racine.jsf">calcul racine carrée</a>
+		<br />
+		<a href="login.jsf">login client</a>
+		<br />
 	</ui:define>
 
 </ui:composition>

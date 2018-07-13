@@ -1,70 +1,60 @@
 package fr.afcepf.ai103.web;
 
-import fr.afcepf.ai103.data.Compte;
-import fr.afcepf.ai103.data.Operation;
-import fr.afcepf.ai103.service.ServiceCompte;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.event.ActionEvent;
 import javax.faces.event.ComponentSystemEvent;
+
+import fr.afcepf.ai103.data.Compte;
+import fr.afcepf.ai103.data.Operation;
+import fr.afcepf.ai103.service.ServiceCompte;
 
 @ManagedBean
 @SessionScoped
-
 public class CompteBean {
 
-	private ServiceCompte servciceCompte = new ServiceCompte();
-
 	private Long numClient = null;
-	private Long numCptDebiteur = null;
-	private Long numCptCrediteur = null;
-	private Double montant = null;
 
-	private List<Compte> comptes = null;
-	private List<Operation> operations = null;
+	private ServiceCompte serviceCompte = new ServiceCompte();
 
-	private Long selectedNumCompte = null;
+	// avec get/set
+	private Long numCptDeb = null; // à selectionner dans liste déroulante dans virement.xhtml
+	private Long numCptCred = null; // à selectionner dans liste déroulante dans virement.xhtml
+	private Double montant = null; // à saisir dans virement.xhtml
 
+	private List<Compte> comptes; // à afficher sous forme de tableau (h:dataTable)
+	private List<Operation> operations; // à afficher sous forme de tableau (h:dataTable)
+
+	private Long selectedNumCompte = null; // +get/set
+
+	public String onSelectCompteAction() {
+		System.out.println("dans onSelectCompteAction() , selectedNumCompte= " + selectedNumCompte);
+		operations = serviceCompte.operationsDuCompte(selectedNumCompte);
+		return null;
+	}
+
+	// constructeur par défaut:
 	public CompteBean() {
 		operations = new ArrayList<Operation>();
 	}
 
-	public Long getSelectedNumCompte() {
-		return selectedNumCompte;
-	}
-
-	public void setSelectedNumCompte(Long selectedNumCompte) {
-		this.selectedNumCompte = selectedNumCompte;
-	}
-
-	// Méthode appelée après que le numClient soit automatiquement mis à jour par
-	// JSF
+	// méthode appelée après que numClient soit automatiquement mis à jour par JSF
 	public void initComptes(ComponentSystemEvent event) {
-		comptes = servciceCompte.comptesDuClient(numClient);
+		comptes = serviceCompte.comptesDuClient(numClient);
 	}
 
-	public void onSelectCompte(ActionEvent event) {
-		operations = servciceCompte.oprationDuCompte(numClient);
-	}
-
-	public Long getNumClient() {
-		return numClient;
-	}
-
-	public void setNumClient(Long numClient) {
-		this.numClient = numClient;
-	}
-
-	public ServiceCompte getServciceCompte() {
-		return servciceCompte;
-	}
-
-	public void setServciceCompte(ServiceCompte servciceCompte) {
-		this.servciceCompte = servciceCompte;
+	public String effectuerVirement() {
+		String suite = null;
+		// effectuer le virement
+		serviceCompte.transferer(montant, numCptDeb, numCptCred);
+		// recharger en mémoire les nouveaux soldes qui ont évolués et qui seront
+		// ré-afficher
+		comptes = serviceCompte.comptesDuClient(numClient);
+		// demander à naviguer vers comptes.xhtml pour réafficher les nouveaux soldes:
+		suite = "comptes"; // .xhtml
+		return suite;
 	}
 
 	public List<Compte> getComptes() {
@@ -75,20 +65,28 @@ public class CompteBean {
 		this.comptes = comptes;
 	}
 
-	public Long getNumCptDebiteur() {
-		return numCptDebiteur;
+	public Long getNumClient() {
+		return numClient;
 	}
 
-	public void setNumCptDebiteur(Long numCptDebiteur) {
-		this.numCptDebiteur = numCptDebiteur;
+	public void setNumClient(Long numClient) {
+		this.numClient = numClient;
 	}
 
-	public Long getNumCptCrediteur() {
-		return numCptCrediteur;
+	public Long getNumCptDeb() {
+		return numCptDeb;
 	}
 
-	public void setNumCptCrediteur(Long numCptCrediteur) {
-		this.numCptCrediteur = numCptCrediteur;
+	public void setNumCptDeb(Long numCptDeb) {
+		this.numCptDeb = numCptDeb;
+	}
+
+	public Long getNumCptCred() {
+		return numCptCred;
+	}
+
+	public void setNumCptCred(Long numCptCred) {
+		this.numCptCred = numCptCred;
 	}
 
 	public Double getMontant() {
@@ -107,13 +105,12 @@ public class CompteBean {
 		this.operations = operations;
 	}
 
-	public String effectuerVirement() {
-		String suite = "";
-		servciceCompte.transferer(montant, numCptDebiteur, numCptCrediteur);
-		comptes = servciceCompte.comptesDuClient(numClient);
-		suite = "comptes";
-
-		return suite;
-
+	public Long getSelectedNumCompte() {
+		return selectedNumCompte;
 	}
+
+	public void setSelectedNumCompte(Long selectedNumCompte) {
+		this.selectedNumCompte = selectedNumCompte;
+	}
+
 }

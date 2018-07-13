@@ -5,16 +5,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>racine carrï¿½e que j'aime</title>
 </head>
 <body>
 <f:view>
-	<h:form>
-	saisie: <h:inputText value="#{calculBean.saisie}"></h:inputText> <br/>
-	<h:commandButton 	value="calculer racine carrée"
-						action="#{calculBean.calculerRacine}"></h:commandButton>
-	</h:form>
-	resultat: <h:outputText value="#{calculBean.resultat}"></h:outputText>
+    <h:messages /> <!-- h:messages affiche des messages d'erreur si ils existent -->
+    <h:form>
+       x: <h:inputText  value="#{calculBean.x}"></h:inputText> <br/>
+       <h:commandButton value="calculer racine carrï¿½e" 
+                        action="#{calculBean.calculerRacine}" />
+    </h:form>
+    res: <h:outputText value="#{calculBean.res }"></h:outputText>
 </f:view>
 </body>
 </html>

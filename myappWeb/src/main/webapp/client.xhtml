@@ -7,24 +7,26 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <ui:composition template="/templates/common.xhtml">
-	<ui:define name="title">
-	   INFOS CLIENT
-	</ui:define>
+	<ui:define name="title">client</ui:define>
 	<ui:define name="content">
-		<h:form>
-			<h:outputText value="#{clientBean.client.prenom}"></h:outputText>
-			<h:outputText value="#{clientBean.client.nom}"></h:outputText>
-			<br />
-			<h:outputText value="#{clientBean.client.adresse}"></h:outputText>
-			<br />
-			<h:outputText value="#{clientBean.client.email}"></h:outputText>
-			<br />
-			<hr />
-			<!-- on force la page comptes.jsf pour tous les Clients sans vérifier l'ID et Pwd du client  -->
-			<h:outputLink
-				value="comptes.jsf?numClient=#{clientBean.client.numClient}">Liste des comptes du client</h:outputLink>
-		</h:form>
-	</ui:define>
+	  numClient: <h:outputText value="#{clientBean.client.numClient}" />
+		<br />
+	  prenom: <h:outputText value="#{clientBean.client.prenom}" />
+		<br />
+      nom: <h:outputText value="#{clientBean.client.nom}" />
+		<br />
+      email: <h:outputText value="#{clientBean.client.email}" />
+		<br />
+	  telephone: <h:outputText value="#{clientBean.client.telephone}" />
+		<br />
+      adresse: <h:outputText value="#{clientBean.client.adresse}" />
+		<hr />
 
+		<!--  h:outputLink fabrique indirectement a href="..." -->
+		<h:outputLink
+			value="comptes.jsf?numClient=#{clientBean.client.numClient}">
+			liste des comptes du client
+		</h:outputLink>
+	</ui:define>
 </ui:composition>
 </html>

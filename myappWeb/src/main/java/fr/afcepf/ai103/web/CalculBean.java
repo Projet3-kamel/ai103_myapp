@@ -1,33 +1,47 @@
 package fr.afcepf.ai103.web;
 
-import javax.faces.bean.ManagedBean ; 
-import javax.faces.bean.RequestScoped; 
-@ManagedBean    
+import java.util.Date;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+
+@ManagedBean // de JSF2 , nom logique par défaut = "calculBean"
+				// = nom de la classe avec minuscule au début
 @RequestScoped
-
 public class CalculBean {
-	
-	private Double saisie;
-	private Double resultat;
-	
+	private Double x; // à saisir
+	private Double res; // à afficher
+
+	private Date date; // avec get/Set pour essai p:calendar
+
 	public String calculerRacine() {
-		this.resultat = Math.sqrt(this.saisie);
-		return null;	//return null pour rester sur la même page.
+		this.res = Math.sqrt(this.x);
+		return null; // rester sur la même page pour afficher le resultat
 	}
 
-	public Double getSaisie() {
-		return saisie;
+	// +get/set
+	public Double getX() {
+		return x;
 	}
-	public void setSaisie(Double saisie) {
-		this.saisie = saisie;
+
+	public void setX(Double x) {
+		this.x = x;
 	}
-	public Double getResultat() {
-		return resultat;
+
+	public Double getRes() {
+		return res;
 	}
-	public void setResultat(Double resultat) {
-		this.resultat = resultat;
+
+	public void setRes(Double res) {
+		this.res = res;
 	}
-	
-	
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
 }

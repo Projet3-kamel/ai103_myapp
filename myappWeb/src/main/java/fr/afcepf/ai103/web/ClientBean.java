@@ -1,27 +1,37 @@
 package fr.afcepf.ai103.web;
 
-import javax.faces.bean.ManagedBean ; 
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import fr.afcepf.ai103.data.Client;
-import fr.afcepf.ai103.service.ServiceClient; 
-@ManagedBean    
-@SessionScoped
+import fr.afcepf.ai103.service.ServiceClient;
 
+@ManagedBean /*
+				 * pour que cette classe java soit prise en charge par le framework JSF2 et pour
+				 * qu'on puisse accéder à une instance depuis une page .xhtml via la syntaxe
+				 * #{clientBean...}
+				 */
+@SessionScoped /* pour que ce soit socker en Session Http , dure longtemps en mémoire */
 public class ClientBean {
-	private Long numClient;
-	private String password;
-	private Client client;
-	private String message;
-	private ServiceClient servClient = new ServiceClient();
-	
+	private Long numClient; // à saisir
+	private String password; // à saisir
+
+	private String message; // à afficher
+
+	private Client client; // infos "client" à récupérer
+
+	private ServiceClient serviceClient = new ServiceClient();
+
 	public String verifLogin() {
-		String suite=null;
-		if(password!=null && password.equals("pwd" + numClient)) {
-			suite="client";
-			this.client = servClient.recherherInfosClient(numClient);
-		}
-		else {
+		String suite = null; /* si suite reste à null on reste sur même page */
+		// simuler verification du mot de passe:
+		if (password != null && password.equals("pwd" + numClient)) {
+			// mot de passe considéré comme ok si "pwd" + numClient (ex: "pwd1" )
+			this.client = serviceClient.rechercherInfosClient(numClient);
+			message = "";
+			// on demande à naviguer vers la page client
+			suite = "client"; // .jsf (.jsp ou .xhtml)
+		} else {
 			message = "invalid password";
 		}
 		return suite;
@@ -43,14 +53,6 @@ public class ClientBean {
 		this.password = password;
 	}
 
-	public Client getClient() {
-		return client;
-	}
-
-	public void setClient(Client client) {
-		this.client = client;
-	}
-
 	public String getMessage() {
 		return message;
 	}
@@ -59,13 +61,12 @@ public class ClientBean {
 		this.message = message;
 	}
 
-	public ServiceClient getServClient() {
-		return servClient;
+	public Client getClient() {
+		return client;
 	}
 
-	public void setServClient(ServiceClient servClient) {
-		this.servClient = servClient;
+	public void setClient(Client client) {
+		this.client = client;
 	}
-	
-	
+
 }

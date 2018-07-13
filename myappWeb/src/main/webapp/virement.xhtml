@@ -7,38 +7,45 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <ui:composition template="/templates/common.xhtml">
-	<ui:define name="title">
-	   VIREMENT
-	</ui:define>
+	<ui:define name="title">virement</ui:define>
 	<ui:define name="content">
-		<!-- Alignement via JSF (h:panleGrid) pas très responsive, moins bien que bootstrap-css -->
+		<h3>virement</h3>
 		<h:form id="f">
+			<!-- alignement via JSF (h:panelGrid)
+	       pas très responsive , moins bien que bootstrap-css -->
 			<h:panelGrid columns="3">
 
-				<h:outputLabel for="idNumCptDeb">N° compte débiteur :</h:outputLabel>
+				<h:outputLabel for="idNumCptDeb">numCptDeb :</h:outputLabel>
 				<h:selectOneListbox id="idNumCptDeb" size="1"
-					value="#{compteBean.numCptDebiteur}">
+					value="#{compteBean.numCptDeb}">
 					<f:selectItems var="cpt" value="#{compteBean.comptes}"
-						itemValue="#{cpt.numCompte}" itemLabel="#{cpt.label}-#{cpt.solde}"></f:selectItems>
+						itemValue="#{cpt.numero}"
+						itemLabel="#{cpt.numero} - #{cpt.label} - #{cpt.solde}" />
 				</h:selectOneListbox>
 				<h:message for="idNumCptDeb" class="erreur" />
 
-				<h:outputLabel for="idNumCptCred">numéro compte créditeur : </h:outputLabel>
+
+
+				<h:outputLabel for="idNumCptCred">numCptCred :</h:outputLabel>
 				<h:selectOneListbox id="idNumCptCred" size="1"
-					value="#{compteBean.numCptCrediteur}">
+					value="#{compteBean.numCptCred}">
 					<f:selectItems var="cpt" value="#{compteBean.comptes}"
-						itemValue="#{cpt.numCompte}" itemLabel="#{cpt.label}-#{cpt.solde}"></f:selectItems>
+						itemValue="#{cpt.numero}"
+						itemLabel="#{cpt.numero} - #{cpt.label} - #{cpt.solde}" />
 				</h:selectOneListbox>
 				<h:message for="idNumCptCred" class="erreur" />
 
-				<h:outputLabel for="idMontant">Montant :</h:outputLabel>
-				<h:inputText label="Montant" required="true" id="idMontant"
-					value="#{compteBean.montant}"></h:inputText>
+				<h:outputLabel for="idMontant">montant :</h:outputLabel>
+				<h:inputText id="idMontant" required="true" label="montant"
+					value="#{compteBean.montant}" />
 				<h:message for="idMontant" class="erreur" />
 
-				<h:commandButton id="idBtnVirement" value="Effectuer virement"
+
+				<h:outputLabel for="idBtnVirement"></h:outputLabel>
+				<h:commandButton id="idBtnVirement" value="effectuer virement"
 					action="#{compteBean.effectuerVirement}" />
-				<h:message for="idBtnVirement" class="erreur" />
+				<h:outputLabel for="idBtnVirement"></h:outputLabel>
+
 			</h:panelGrid>
 		</h:form>
 	</ui:define>
