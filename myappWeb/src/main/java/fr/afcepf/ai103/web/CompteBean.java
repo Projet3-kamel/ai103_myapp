@@ -3,6 +3,7 @@ package fr.afcepf.ai103.web;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ComponentSystemEvent;
@@ -11,14 +12,13 @@ import fr.afcepf.ai103.data.Compte;
 import fr.afcepf.ai103.data.Operation;
 import fr.afcepf.ai103.service.ServiceCompte;
 
-
-
-
 @ManagedBean
 @SessionScoped
 public class CompteBean {
 
 	private Long numClient = null;
+	@EJB // @EJB demande au serveur d'initialiser la variable serviceCompte
+	// pour référencer un EJB exitant compatible avec l'interface ou la classe
 
 	private ServiceCompte serviceCompte = new ServiceCompte();
 

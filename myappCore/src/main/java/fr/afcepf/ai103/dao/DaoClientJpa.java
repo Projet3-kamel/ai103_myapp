@@ -5,8 +5,6 @@ import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 
 import fr.afcepf.ai103.data.Client;
@@ -22,17 +20,7 @@ public class DaoClientJpa implements IDaoClient {
 	@PersistenceContext(unitName = "myappCore")
 	private EntityManager entityManager;
 
-	private void initEntityManagerSansEjb() {
-		// 1. créer l'objet technique EntityManagerFactory de JPA
-		// en analysant le fichier META-INF/persistence.xml
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myappCore");
-
-		// 2. créer le EntityManager via la factory
-		this.entityManager = entityManagerFactory.createEntityManager();
-	}
-
 	public DaoClientJpa() {
-		initEntityManagerSansEjb();
 	}
 
 	// commit/rollback declenché automatiquement par container EJB selon exception

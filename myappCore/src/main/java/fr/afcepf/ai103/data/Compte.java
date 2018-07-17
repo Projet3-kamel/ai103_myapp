@@ -1,13 +1,26 @@
 package fr.afcepf.ai103.data;
 
+import java.util.List;
 
-//@Entity
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+@Entity
 public class Compte {
 
-	//@Id
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "numCompte")
 	private Long numero;
 	private String label;
 	private Double solde;
+
+	@OneToMany(mappedBy = "compte") // mappedBy = "nomJava_RelatioInverse_Many"
+	private List<Operation> dernieresOperations; //
 
 	public Compte() {
 		super();
@@ -37,4 +50,11 @@ public class Compte {
 		this.solde = solde;
 	}
 
+	public List<Operation> getDernieresOperations() {
+		return dernieresOperations;
+	}
+
+	public void setDernieresOperations(List<Operation> dernieresOperations) {
+		this.dernieresOperations = dernieresOperations;
+	}
 }

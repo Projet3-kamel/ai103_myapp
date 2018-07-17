@@ -18,6 +18,8 @@
 		<!-- pour une appli JEE/EJB, c'est le serveur qui impose le provider -->
 
 		<class>fr.afcepf.ai103.data.Client</class>
+		<class>fr.afcepf.ai103.data.Compte</class>
+		<class>fr.afcepf.ai103.data.Operation</class>
 		<!-- class>fr.afcepf.ai103.data.Compte</class> -->
 
 		<properties>

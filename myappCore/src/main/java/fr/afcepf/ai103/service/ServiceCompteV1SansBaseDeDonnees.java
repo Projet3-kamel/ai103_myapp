@@ -2,35 +2,42 @@ package fr.afcepf.ai103.service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.ejb.EJB;
-import javax.ejb.Local;
-import javax.ejb.Stateless;
-
-import fr.afcepf.ai103.dao.IDaoCompte;
 import fr.afcepf.ai103.data.Compte;
 import fr.afcepf.ai103.data.Operation;
 
-@Stateless
-@Local
-// avec transactions automatiques sur toutes les méthodes dont transferer()
-public class ServiceCompte {
-	@EJB
-	private IDaoCompte daoCompte;
+public class ServiceCompteV1SansBaseDeDonnees {
+	private Map<Long, Compte> mapComptes = new HashMap<Long, Compte>();// simulation en mémoire
+
+	public ServiceCompteV1SansBaseDeDonnees() {
+		Compte cpt1 = new Compte();
+		cpt1.setNumero(123456L);
+		cpt1.setLabel("compte courant");
+		cpt1.setSolde(500.0);
+		mapComptes.put(cpt1.getNumero(), cpt1);
+
+		Compte cpt2 = new Compte();
+		cpt2.setNumero(97855245L);
+		cpt2.setLabel("compte épargne (livret A)");
+		cpt2.setSolde(400.0);
+		mapComptes.put(cpt2.getNumero(), cpt2);
+	}
 
 	public void transferer(double montant, long numCptDeb, long numCptCred) {
-		Compte cptDeb = daoCompte.rechercherCompteParNumero(numCptDeb);
+		Compte cptDeb = mapComptes.get(numCptDeb);
 		cptDeb.setSolde(cptDeb.getSolde() - montant);
-		Compte cptCred = daoCompte.rechercherCompteParNumero(numCptCred);
+		Compte cptCred = mapComptes.get(numCptCred);
 		cptCred.setSolde(cptCred.getSolde() + montant);
 	}
 
 	public List<Compte> comptesDuClient(Long numClient) {
 		List<Compte> listeComptes = new ArrayList<Compte>();
-		// temporairement en attendant le lien compte-client :
-		listeComptes.add(daoCompte.rechercherCompteParNumero(1L));
-		listeComptes.add(daoCompte.rechercherCompteParNumero(2L));
+		// simulation de valeurs récupérées en base:
+		listeComptes.add(mapComptes.get(123456L));
+		listeComptes.add(mapComptes.get(97855245L));
 		return listeComptes;
 	}
 
