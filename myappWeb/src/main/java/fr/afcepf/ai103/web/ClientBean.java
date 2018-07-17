@@ -1,10 +1,12 @@
 package fr.afcepf.ai103.web;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import fr.afcepf.ai103.data.Client;
-import fr.afcepf.ai103.service.ServiceClient;
+import fr.afcepf.ai103.service.IServiceClient;
 
 @ManagedBean /*
 				 * pour que cette classe java soit prise en charge par le framework JSF2 et pour
@@ -20,7 +22,26 @@ public class ClientBean {
 
 	private Client client; // infos "client" à récupérer
 
-	private ServiceClient serviceClient = new ServiceClient();
+	// private ServiceClient serviceClient = new ServiceClient();
+
+	@EJB // pour demander au serveur JEE de mettre à jour automatiquement
+	// la référence serviceClient en pointant vers un EJB existant de l'application
+	// qui implémente l'interface précisée (Pattern "injection de dépendance")
+	// @Inject peut par fois être utilisé à la place de @EJB
+	private IServiceClient serviceClient;
+
+	public ClientBean() {
+
+		System.out.println("Dans le constructeur par défaut, serviceClient = " + serviceClient);
+		// serviceClient.appelMethodeDesDebut() ==> NullPointerException
+	}
+
+	@PostConstruct
+	public void initialisationApresInjectionDeDependance() {
+
+		System.out.println("Dans méthode préfixe par @PostContruct, serciveClient = " + serviceClient);
+		// serviceClient.appelMethodeDesDebut() ==> ok !!!
+	}
 
 	public String verifLogin() {
 		String suite = null; /* si suite reste à null on reste sur même page */

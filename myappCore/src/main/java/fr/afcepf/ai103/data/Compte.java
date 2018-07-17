@@ -1,7 +1,5 @@
 package fr.afcepf.ai103.data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 
 //@Entity
 public class Compte {

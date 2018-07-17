@@ -12,64 +12,64 @@
 
 	<properties>
 		<failOnMissingWebXml>false</failOnMissingWebXml>
-		<org.apache.myfaces.version>2.2.5</org.apache.myfaces.version>
+		<!-- le serveur JBoss comporte déjà en lui les .jar de JSF (équivalent 
+			de myfaces) -->
 	</properties>
 
 	<dependencies>
 
-		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
-			<version>3.1.0</version>
-			<scope>provided</scope>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>6.1</version>
 		</dependency>
+		
+		
+
 
 		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.9.6</version>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<!-- javaee-api = pack d'api jee : servlet-api + JSF + JAX-RS + ... -->
+			<version>7.0</version>
+			<scope>provided</scope> <!-- dejà fourni par jboss -->
 		</dependency>
 
-		<dependency>
-			<groupId>fr.afcepf.ai103</groupId>
-			<artifactId>myappCore</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
 
+
+
 		<dependency>
-			<groupId>org.apache.myfaces.core</groupId>
-			<artifactId>myfaces-api</artifactId>
-			<version>${org.apache.myfaces.version}</version>
-			<scope>compile</scope>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>    <!-- pour générer du JSON depuis du java et vice versa -->
+			<version>2.9.6</version>
+			<!-- si scope=compile par défaut le .jar est utilisé à la compilation 
+				et à l'execution et sera placé dans la partie WEB-INF/lib du .war à déployer 
+				dans tomcat ou jboss -->
 		</dependency>
 
 		<dependency>
-			<groupId>org.apache.myfaces.core</groupId>
-			<artifactId>myfaces-impl</artifactId>
-			<version>${org.apache.myfaces.version}</version>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
 			<groupId>fr.afcepf.ai103</groupId>
 			<artifactId>myappCore</artifactId>
-			<!-- maven placera dans la partie WEB-INF/lib du .war construit le fichier 
-				myappCore...jar (projet myappCore packagé ) -->
+			<!-- sans EJB avec tomcat maven placera dans la partie WEB-INF/lib du 
+				.war construit le fichier myappCore...jar (projet myappCore packagé ) et 
+				le scope devait être à compile (valeur par défaut) ============ Maintenant 
+				dans le cadre d'un EAR , le projet myappCore (EJB) sera déployé à coté du 
+				.war (dans l'ear) et le code des EJB chargé dans jboss sera fourni à la partie 
+				web ==> besoin de scopeprovided -->
 			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
 		</dependency>
 
 	</dependencies>
 
-	<build>
-		<finalName>myappWeb</finalName>
-	</build>
 
+	<build>
+		<finalName>myappWeb</finalName> <!-- pour construire myappWeb.war -->
+	</build>
 
 </project>

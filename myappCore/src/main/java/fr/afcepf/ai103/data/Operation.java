@@ -2,8 +2,6 @@ package fr.afcepf.ai103.data;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 
 //@Entity
 public class Operation {
