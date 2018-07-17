@@ -29,8 +29,11 @@ public class ServiceCompte {
 	public List<Compte> comptesDuClient(Long numClient) {
 		List<Compte> listeComptes = new ArrayList<Compte>();
 		// temporairement en attendant le lien compte-client :
-		listeComptes.add(daoCompte.rechercherCompteParNumero(1L));
-		listeComptes.add(daoCompte.rechercherCompteParNumero(2L));
+		listeComptes.add(daoCompte.rechercherCompteParNumero(numClient));
+		listeComptes.add(daoCompte.rechercherCompteParNumero(numClient));
+		for (Compte compte : listeComptes) {
+			System.out.println(compte.toString());
+		}
 		return listeComptes;
 	}
 

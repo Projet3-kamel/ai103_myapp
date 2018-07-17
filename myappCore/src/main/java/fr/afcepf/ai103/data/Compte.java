@@ -12,6 +12,12 @@ import javax.persistence.OneToMany;
 @Entity
 public class Compte {
 
+	@Override
+	public String toString() {
+		return "Compte [numero=" + numero + ", label=" + label + ", solde=" + solde + ", dernieresOperations="
+				+ dernieresOperations + "]";
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "numCompte")
