@@ -1,5 +1,7 @@
 package fr.afcepf.ai103.service;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -31,6 +33,12 @@ public class ServiceClient implements IServiceClient {
 		 * cli.setEmail("jean.bon@ici_ou_la.fr"); cli.setTelephone("0102030405"); return
 		 * cli;
 		 */
+	}
+
+	@Override
+	public List<Client> rechercherListeClientsParNom(String nom) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	// ....
