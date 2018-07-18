@@ -1,11 +1,17 @@
 package fr.afcepf.ai103.data;
 
+import java.util.List;
+
 import javax.persistence.Column;
 /* javax.persistance = package de JPA */
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 @Entity // Entité persistance prise en charge par JPA/hibernate
 // @Table(name="Client")
@@ -25,8 +31,20 @@ public class Client {
 	private String telephone;
 
 	private String password;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "Client_Compte", joinColumns = { @JoinColumn(name = "client_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "compte_id") })
+	private List<Compte> comptes;
 
 	// +get/set , +toString() , + default constructor
+
+	public List<Compte> getComptes() {
+		return comptes;
+	}
+
+	public void setComptes(List<Compte> comptes) {
+		this.comptes = comptes;
+	}
 
 	@Override
 	public String toString() {

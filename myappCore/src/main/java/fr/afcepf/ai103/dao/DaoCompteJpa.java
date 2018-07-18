@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import fr.afcepf.ai103.data.Compte;
+import fr.afcepf.ai103.data.Operation;
 
 @Stateless
 @Local
@@ -49,6 +50,20 @@ public class DaoCompteJpa implements IDaoCompte {
 	public void supprimerCompte(Long numero) {
 		Compte c = entityManager.find(Compte.class, numero);
 		entityManager.remove(c); // DELETE SQL
+	}
+
+	@Override
+	public void getDernieresOperations() {
+
+	}
+
+	@Override
+	public List<Operation> getDernieresOperations(Long numClient) {
+		// numCompte ou numero
+		// String requeteJpa = "SELECT o FROM Operation AS o WHERE o.compte.numero =
+		// :numCpt";
+		return (List<Operation>) entityManager.createNamedQuery("Operation.findByNumCompte", Operation.class)
+				.setParameter("numCpt", numClient).getResultList();
 	}
 
 }

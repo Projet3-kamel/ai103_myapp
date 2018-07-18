@@ -9,10 +9,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
+@NamedQuery(name = "Operation.findByNumCompte", query = "SELECT o FROM Operation AS o WHERE o.compte.numero = :numCpt")
 public class Operation {
 
 	// INSERT INTO Operation(date, montant, label) VALUES ('', , '')

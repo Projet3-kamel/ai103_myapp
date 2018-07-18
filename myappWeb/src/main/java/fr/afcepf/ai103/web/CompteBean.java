@@ -35,7 +35,7 @@ public class CompteBean {
 	public String onSelectCompteAction() {
 		System.out.println("dans onSelectCompteAction() , selectedNumCompte= " + selectedNumCompte);
 		operations = serviceCompte.operationsDuCompte(selectedNumCompte);
-		return null;
+		return operations.toString();
 	}
 
 	// constructeur par défaut:
@@ -46,6 +46,9 @@ public class CompteBean {
 	// méthode appelée après que numClient soit automatiquement mis à jour par JSF
 	public void initComptes(ComponentSystemEvent event) {
 		comptes = serviceCompte.comptesDuClient(numClient);
+
+		// test temporaire
+		this.operations = serviceCompte.operationsDuCompte(numClient);
 	}
 
 	public String effectuerVirement() {
