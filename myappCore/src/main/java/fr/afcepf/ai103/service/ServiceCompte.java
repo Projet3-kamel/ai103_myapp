@@ -1,12 +1,13 @@
 package fr.afcepf.ai103.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 
+import fr.afcepf.ai103.dao.IDaoClient;
 import fr.afcepf.ai103.dao.IDaoCompte;
 import fr.afcepf.ai103.data.Compte;
 import fr.afcepf.ai103.data.Operation;
@@ -18,21 +19,47 @@ public class ServiceCompte {
 	@EJB
 	private IDaoCompte daoCompte;
 
-	public void transferer(double montant, long numCptDeb, long numCptCred) {
-		Compte cptDeb = daoCompte.rechercherCompteParNumero(numCptDeb);
-		cptDeb.setSolde(cptDeb.getSolde() - montant);
-		Compte cptCred = daoCompte.rechercherCompteParNumero(numCptCred);
-		cptCred.setSolde(cptCred.getSolde() + montant);
-	}
+	@EJB
+	private IDaoClient daoClient;
 
 	public List<Compte> comptesDuClient(Long numClient) {
-		List<Compte> listeComptes = new ArrayList<Compte>();
-		// temporairement en attendant le lien compte-client :
-		listeComptes.add(daoCompte.rechercherCompteParNumero(1L));
-		listeComptes.add(daoCompte.rechercherCompteParNumero(2L));
 
-		return listeComptes;
+		return daoClient.comptesPourClient(numClient);
 	}
+	// version 1 ::
+	/*
+	 * public void transferer(double montant, long numCptDeb, long numCptCred) {
+	 * Compte cptDeb = daoCompte.rechercherCompteParNumero(numCptDeb);
+	 * cptDeb.setSolde(cptDeb.getSolde() - montant); Compte cptCred =
+	 * daoCompte.rechercherCompteParNumero(numCptCred);
+	 * cptCred.setSolde(cptCred.getSolde() + montant); }
+	 */
+
+	// version 2 ::
+	// NB: l'execution de la méthode transferer()
+	// se fera automatiquement en mode transactionnel (tout ou rien)
+	public void transferer(double montant, long numCptDeb, long numCptCred) {
+		Compte cptCred = daoCompte.rechercherCompteParNumero(numCptCred);
+		cptCred.setSolde(cptCred.getSolde() + montant);
+		// pas absolument besoin d'appeler daoCompte.mettreAjourCompte(cptCred);
+		// car cptCred est ici à l'état persistant (pas détaché)
+		Compte cptDeb = daoCompte.rechercherCompteParNumero(numCptDeb);
+		if (cptDeb.getSolde() < montant)
+			throw new EJBException("solde insuffisant sur le compte à débiter");
+		/* else */
+		cptDeb.setSolde(cptDeb.getSolde() - montant);
+		// pas absolument besoin d'appeler daoCompte.mettreAjourCompte(cptCred);
+		// car cptCred est ici à l'état persistant (pas détaché)
+	}
+
+	/*
+	 * public List<Compte> comptesDuClient(Long numClient) { List<Compte>
+	 * listeComptes = new ArrayList<Compte>(); // temporairement en attendant le
+	 * lien compte-client :
+	 * listeComptes.add(daoCompte.rechercherCompteParNumero(numClient));
+	 * 
+	 * return listeComptes; }
+	 */
 	/*
 	 * Varainte A exploitant le lien "@OneToMany
 	 * 

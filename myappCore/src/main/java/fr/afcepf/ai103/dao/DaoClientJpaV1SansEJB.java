@@ -7,6 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import fr.afcepf.ai103.data.Client;
+import fr.afcepf.ai103.data.Compte;
 
 public class DaoClientJpaV1SansEJB implements IDaoClient {
 
@@ -73,6 +74,12 @@ public class DaoClientJpaV1SansEJB implements IDaoClient {
 			e.printStackTrace();
 			throw e;
 		}
+	}
+
+	@Override
+	public List<Compte> comptesPourClient(Long numClient) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import fr.afcepf.ai103.data.Client;
+import fr.afcepf.ai103.data.Compte;
 
 @Stateless
 @Local
@@ -46,6 +47,13 @@ public class DaoClientJpa implements IDaoClient {
 	public void supprimerClient(Long numero) {
 		Client c = entityManager.find(Client.class, numero);
 		entityManager.remove(c); // DELETE SQL
+	}
+
+	@Override
+	public List<Compte> comptesPourClient(Long numClient) {
+
+		return entityManager.createNamedQuery("Client.comptesDuClient", Compte.class)
+				.setParameter("numClient", numClient).getResultList();
 	}
 
 }

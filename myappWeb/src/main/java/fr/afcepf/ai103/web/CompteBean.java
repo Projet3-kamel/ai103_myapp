@@ -47,8 +47,11 @@ public class CompteBean {
 	public void initComptes(ComponentSystemEvent event) {
 		comptes = serviceCompte.comptesDuClient(numClient);
 
-		// test temporaire
-		this.operations = serviceCompte.operationsDuCompte(numClient);
+		System.out.println("dans initComptes() , selectedNumCompte= " + selectedNumCompte);
+
+		if (this.selectedNumCompte != null) {
+			this.operations = serviceCompte.operationsDuCompte(selectedNumCompte);
+		}
 	}
 
 	public String effectuerVirement() {

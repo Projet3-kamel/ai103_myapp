@@ -3,6 +3,7 @@ package fr.afcepf.ai103.dao;
 import java.util.List;
 
 import fr.afcepf.ai103.data.Client;
+import fr.afcepf.ai103.data.Compte;
 
 /*
  * DAO = Data Access Object 
@@ -18,4 +19,6 @@ public interface IDaoClient {
     
     public void mettreAjourClient(Client p);
     public void supprimerClient(Long numero);
+
+	public List<Compte> comptesPourClient(Long numClient);
 }

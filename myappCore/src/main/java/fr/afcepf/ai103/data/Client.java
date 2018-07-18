@@ -12,9 +12,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
 
 @Entity // Entité persistance prise en charge par JPA/hibernate
-// @Table(name="Client")
+// @Table(name="Client") Client.comptesDuClient
+@NamedQuery(name = "Client.comptesDuClient", query = "SELECT cpt FROM Client cli INNER JOIN cli.comptes cpt WHERE cli.numClient  = :numClient")
+// Pas besoin de On ...=... après INNER JOIN cli.comptes cpt
+// car JPA/Hibernate analyse toutes les structures java et connait les valeurs
+// du ...=...
 public class Client {
 
 	@Id // identifiant persistante prise en charge oar JPA/Hibernate
@@ -37,14 +42,6 @@ public class Client {
 	private List<Compte> comptes;
 
 	// +get/set , +toString() , + default constructor
-
-	public List<Compte> getComptes() {
-		return comptes;
-	}
-
-	public void setComptes(List<Compte> comptes) {
-		this.comptes = comptes;
-	}
 
 	@Override
 	public String toString() {
@@ -110,6 +107,14 @@ public class Client {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public List<Compte> getComptes() {
+		return comptes;
+	}
+
+	public void setComptes(List<Compte> comptes) {
+		this.comptes = comptes;
 	}
 
 }
