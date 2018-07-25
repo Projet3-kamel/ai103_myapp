@@ -1,23 +1,21 @@
-INSERT INTO Client(numClient, prenom, nom, email, adresse, telephone, password) VALUES (1, 'Jean', 'DU JARDIN', 'jean.dujardin@gmail.com', '1 rue Thénard 75005 Paris', '06552233', 'pwd1')
-INSERT INTO Client(numClient, prenom, nom, email, adresse, telephone, password) VALUES (2, 'axelle', 'Aire', 'axelle.aire@gmail.com', '1 rue elle 69005 Lyon', '06552233', 'pwd2')
-INSERT INTO Client(numClient, prenom, nom, email, adresse, telephone, password) VALUES (3, 'amar', 'DEKABYLIE', 'amardekabylie@gmail.com', '1 rue Thénard 94120 Créteil', '06552233', 'pwd3')
-INSERT INTO Client(numClient, prenom, nom, email, adresse, telephone, password) VALUES (4, 'air', 'Nike', 'air.nike@gmail.com', '23 rue de Londre 75009 PAris', '06552233', 'pwd4')
+//import.sql est un script SQL automatiquement déclenché par hibernate 
+//au démarrage de appli (ou test) en mode hibernate.hbm2ddl.auto=create  
 
-INSERT INTO Compte(numCompte, label, solde) VALUES (1, 'compte courant 1', 500.0)
-INSERT INTO Compte(numCompte, label, solde) VALUES (2, 'compte epargne 1', 10000.0)
-INSERT INTO Compte(numCompte, label, solde) VALUES (3, 'compte courant 3', 2390.0)
-INSERT INTO Compte(numCompte, label, solde) VALUES (4, 'compte courant 4', 1256.70)
+INSERT INTO Client(numClient,prenom,nom,email,adresse,telephone,password) VALUES (1,'alex','Therieur','alex.therieur@gmail.com','1 rue elle 75000 Paris','0102030405' , 'pwd1')
+INSERT INTO Client(numClient,prenom,nom,email,adresse,telephone,password) VALUES (2,'axelle','Aire','axelle.aire@gmail.com','1 rue lionceau 69000 Lyon','0504030201' , 'pwd2')
+INSERT INTO Client(numClient,prenom,nom,email,adresse,telephone,password) VALUES (3,'alain','Therieur','alain.therieur@gmail.com','2 rue elle 75000 Paris','0102030405' , 'pwd3')
 
-INSERT INTO Client_Compte(client_id, compte_id) VALUES (1,1)
-INSERT INTO Client_Compte(client_id, compte_id) VALUES (1,3)
-INSERT INTO Client_Compte(client_id, compte_id) VALUES (2,2)
-INSERT INTO Client_Compte(client_id, compte_id) VALUES (2,4)
+INSERT INTO Compte(numCompte,label,solde) VALUES (1,'compte courant 1', 500.1) 
+INSERT INTO Compte(numCompte,label,solde) VALUES (2,'compte epargne 2', 300.6) 
+INSERT INTO Compte(numCompte,label,solde) VALUES (3,'compte courant 3', 200.1) 
+INSERT INTO Compte(numCompte,label,solde) VALUES (4,'compte epargne 4', 800.6) 
 
+INSERT INTO Client_Compte(client_id,compte_id) VALUES (1,1) 
+INSERT INTO Client_Compte(client_id,compte_id) VALUES (1,2)
+INSERT INTO Client_Compte(client_id,compte_id) VALUES (2,3) 
+INSERT INTO Client_Compte(client_id,compte_id) VALUES (2,4) 
 
-
-INSERT INTO Operation(numOperation, dateOp, montant, label, numCpt) VALUES (1, '2018-07-17',  -15.50, 'Achat 1', 1)
-INSERT INTO Operation(numOperation, dateOp, montant, label, numCpt) VALUES (2, '2018-07-07', -105.85, 'Achat 2', 2)
-INSERT INTO Operation(numOperation, dateOp, montant, label, numCpt) VALUES (3, '2018-07-17',  -5.50, 'Achat 3', 1)
-INSERT INTO Operation(numOperation, dateOp, montant, label, numCpt) VALUES (4, '2018-07-07', -1.85, 'Achat 4', 3)
-
-
+INSERT INTO Operation(numOperation,dateOp,montant,label,numCpt) VALUES (1,'2018-07-17', -15.5 , 'achat 1' , 1 )
+INSERT INTO Operation(numOperation,dateOp,montant,label,numCpt) VALUES (2,'2018-07-7', -5.5 , 'achat 2' , 1 )
+INSERT INTO Operation(numOperation,dateOp,montant,label,numCpt) VALUES (3,'2018-07-17', -8.5 , 'achat 3' , 2 )
+INSERT INTO Operation(numOperation,dateOp,montant,label,numCpt) VALUES (4,'2018-07-12', -4.5 , 'achat 4' , 2 )

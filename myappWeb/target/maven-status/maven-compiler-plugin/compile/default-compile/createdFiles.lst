@@ -1,3 +1,5 @@
 fr\afcepf\ai103\web\CalculBean.class
+fr\afcepf\ai103\rest\MyRestApplicationConfig.class
 fr\afcepf\ai103\web\ClientBean.class
+fr\afcepf\ai103\rest\ClientRest.class
 fr\afcepf\ai103\web\CompteBean.class

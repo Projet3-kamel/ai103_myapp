@@ -3,7 +3,7 @@ package fr.afcepf.ai103.data;
 import java.util.List;
 
 import javax.persistence.Column;
-/* javax.persistance = package de JPA */
+/* javax.persistence = package de JPA */
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,34 +12,44 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
-@Entity // Entité persistance prise en charge par JPA/hibernate
-// @Table(name="Client") Client.comptesDuClient
-@NamedQuery(name = "Client.comptesDuClient", query = "SELECT cpt FROM Client cli INNER JOIN cli.comptes cpt WHERE cli.numClient  = :numClient")
-// Pas besoin de On ...=... après INNER JOIN cli.comptes cpt
-// car JPA/Hibernate analyse toutes les structures java et connait les valeurs
-// du ...=...
-public class Client {
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-	@Id // identifiant persistante prise en charge oar JPA/Hibernate
+@Entity // entité persistante prise en charge par JPA/Hibernate
+// @Table(name="Client")
+@NamedQueries({
+		@NamedQuery(name = "Client.comptesDuClient", query = "SELECT cpt FROM Client cli INNER JOIN cli.comptes cpt WHERE cli.numClient = :numClient"),
+		@NamedQuery(name = "Client.parNom", query = "SELECT cli FROM Client cli  WHERE cli.nom = :nom") })
+// pas besoin de ON ....=.... apres INNER JOIN cli.comptes cpt
+// car JPA/Hibernate analyse toutes les structures java et connait les valeurs
+// du ON ...=....
+// cpt est un alias pour un élément de cli.comptes
+public class Client {
+	@Id // identifiant (primary key)
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // IDENTITY convient le mieux
+														// pour les bases de données récentes
 	// @Column(name="numClient")
-	@GeneratedValue(strategy = GenerationType.IDENTITY) // IDENTITY le mieux pour les BDD récentes
 	private Long numClient;
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "Client_Compte", joinColumns = { @JoinColumn(name = "client_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "compte_id") })
+	@JsonIgnore // pour que les comptes problématiques en mode LAZY
+				// ne soient pas pris en compte lors de la conversion JAVA vers JSON
+				// déclenchée par la technologie jackson elle même utilisée par JAX-RS
+	private List<Compte> comptes; // +get/set
 
 	private String nom;
 	private String prenom;
 	private String email;
 	private String adresse;
 
-	@Column(length = 15) // varchar(15)
+	@Column(length = 15) // VARCHAR(15)
 	private String telephone;
 
 	private String password;
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "Client_Compte", joinColumns = { @JoinColumn(name = "client_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "compte_id") })
-	private List<Compte> comptes;
 
 	// +get/set , +toString() , + default constructor
 

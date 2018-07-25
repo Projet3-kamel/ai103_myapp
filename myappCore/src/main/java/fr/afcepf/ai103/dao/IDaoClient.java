@@ -18,7 +18,10 @@ public interface IDaoClient {
     //... autres recherches ...
     
     public void mettreAjourClient(Client p);
+    
     public void supprimerClient(Long numero);
 
 	public List<Compte> comptesPourClient(Long numClient);
+
+	List<Client> rechercherClientsParNom(String nom);
 }

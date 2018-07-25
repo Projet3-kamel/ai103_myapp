@@ -10,6 +10,6 @@ public interface IServiceClient {
 
 	List<Client> rechercherListeClientsParNom(String nom);
 	
-	
+	Client saveOrUpdateClient(Client cli);
 
 }

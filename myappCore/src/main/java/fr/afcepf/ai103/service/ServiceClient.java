@@ -25,20 +25,24 @@ public class ServiceClient implements IServiceClient {
 	public Client rechercherInfosClient(Long numClient) {
 
 		return daoClient.rechercherClientParNumero(numClient);
-		/*
-		 * Client cli = new Client();
-		 * // simulation de valeurs récupérées en base: cli.setNumClient(numClient);
-		 * cli.setPrenom("jean"); cli.setNom("Bon");
-		 * cli.setAdresse("12 rue elle 75000 Par ici");
-		 * cli.setEmail("jean.bon@ici_ou_la.fr"); cli.setTelephone("0102030405"); return
-		 * cli;
-		 */
+
 	}
 
 	@Override
 	public List<Client> rechercherListeClientsParNom(String nom) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return daoClient.rechercherClientsParNom(nom);
+	}
+
+	@Override
+	public Client saveOrUpdateClient(Client cli) {
+
+		if (cli.getNumClient() == null) {
+			cli = daoClient.insererNouveauClient(cli); // entityManger.persist();;
+		} else {
+			daoClient.mettreAjourClient(cli); // entityManger.merge();
+		}
+		return cli;
 	}
 
 	// ....

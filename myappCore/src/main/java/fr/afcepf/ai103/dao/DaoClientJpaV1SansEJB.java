@@ -82,4 +82,10 @@ public class DaoClientJpaV1SansEJB implements IDaoClient {
 		return null;
 	}
 
+	@Override
+	public List<Client> rechercherClientsParNom(String nom) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
