@@ -46,6 +46,7 @@ public class ClientRest {
 	@POST
 	@Consumes("application/json") // 
 	public Client postClient(Client cli) {
+		System.out.println("données de la requête reçus : " + cli.toString());
 		cli = serviceClient.saveOrUpdateClient(cli);
 		return cli;
 	}

@@ -23,11 +23,7 @@
 			<artifactId>primefaces</artifactId>
 			<version>6.1</version>
 		</dependency>
-		
-		
-
-
-		<dependency>
+	 	<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
 			<!-- javaee-api = pack d'api jee : servlet-api + JSF + JAX-RS + ... -->
